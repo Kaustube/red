@@ -1,63 +1,226 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useRef, useState } from "react";
-import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "framer-motion";
-import int1 from "@/assets/red-int-1.jpg";
-import int2 from "@/assets/red-int-2.jpg";
-import int3 from "@/assets/red-int-3.jpg";
-import int4 from "@/assets/red-int-4.jpg";
-import int5 from "@/assets/red-int-5.jpg";
-import int6 from "@/assets/red-int-6.jpg";
-import food1 from "@/assets/red-photo-1.jpg";
-import food2 from "@/assets/red-photo-2.jpg";
+import { type ReactNode, useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion, useScroll, useSpring, useTransform } from "framer-motion";
+import { ArrowUpRight, Clock3, Instagram, MapPin, Phone, Sparkles } from "lucide-react";
+import heroImage from "@/assets/red-int-1.jpg";
+import loungeImage from "@/assets/red-int-2.jpg";
+import dishImage from "@/assets/red-photo-3.jpg";
+import cocktailImage from "@/assets/red-photo-4.jpg";
+import logoMark from "@/assets/red-logo.png";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "RED Vasant Vihar | Pan-Asian Restaurant in Basant Lok, New Delhi" },
+      { title: "RED Vasant Vihar | Cocktail Bar & Asian Kitchen" },
       {
         name: "description",
         content:
-          "RED Vasant Vihar is a Pan-Asian restaurant in Basant Lok, New Delhi. View the menu, hours, address, phone number, reservations links, and Instagram profile.",
+          "RED Vasant Vihar is a luxury cocktail bar and Asian kitchen in Basant Lok, New Delhi. Explore the space, selected dishes, reservations, hours, and location.",
       },
       {
         name: "keywords",
         content:
-          "RED Vasant Vihar, RED Basant Lok, Pan-Asian restaurant Vasant Vihar, Basant Lok restaurant, RED menu, RED contact, RED reservations",
+          "RED Vasant Vihar, RED Basant Lok, cocktail bar Vasant Vihar, Asian kitchen Vasant Vihar, RED menu, RED reservations",
       },
       { name: "robots", content: "index, follow, max-image-preview:large" },
-      { name: "theme-color", content: "#551b1f" },
+      { name: "theme-color", content: "#2d070d" },
       { property: "og:title", content: "RED Vasant Vihar" },
       {
         property: "og:description",
         content:
-          "Pan-Asian restaurant in Basant Lok, Vasant Vihar, New Delhi. Address, hours, menu sections, contact details, and reservations links.",
+          "A cinematic cocktail bar and Asian kitchen in Basant Lok, Vasant Vihar, New Delhi.",
       },
       { property: "og:type", content: "website" },
-      { property: "og:image", content: food1 },
+      { property: "og:image", content: cocktailImage },
       { property: "og:site_name", content: "RED Vasant Vihar" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "RED Vasant Vihar" },
       {
         name: "twitter:description",
-        content:
-          "Pan-Asian restaurant in Basant Lok, Vasant Vihar, New Delhi. Menu, hours, phone number, and reservations.",
+        content: "Luxury cocktail bar and Asian kitchen in Basant Lok, Vasant Vihar, New Delhi.",
       },
-      { name: "twitter:image", content: food1 },
+      { name: "twitter:image", content: cocktailImage },
     ],
   }),
   component: Index,
 });
 
-const img1 = int1;
-const img3 = int4;
-const photos = [int1, int2, int3, int5, int6, food1, food2];
+type Dish = { name: string; desc: string; price: string; tag?: string };
+type MenuSection = {
+  label: string;
+  script: string;
+  image: string;
+  note: string;
+  items: Dish[];
+};
+
+const galleryImages = [
+  {
+    image: heroImage,
+    title: "The Room",
+    copy: "A saturated red dining room with soft light, stillness, and cinematic depth.",
+  },
+  {
+    image: loungeImage,
+    title: "The Bar",
+    copy: "Curved lines, velvet mood, and a glow that feels intimate after dark.",
+  },
+  {
+    image: cocktailImage,
+    title: "The Pour",
+    copy: "Precision-led cocktails presented with restraint, balance, and detail.",
+  },
+  {
+    image: dishImage,
+    title: "The Plate",
+    copy: "Asian flavours presented with contrast, texture, and a clean visual finish.",
+  },
+];
+
+const signatureMoments = [
+  {
+    eyebrow: "Spatial Design",
+    title: "A room built around mood.",
+    copy: "Everything is composed to feel immersive rather than loud, with deep crimson tones, soft pools of light, and intimate sightlines.",
+    image: heroImage,
+  },
+  {
+    eyebrow: "Bar Program",
+    title: "Cocktails with a sharper visual identity.",
+    copy: "The bar carries the same attitude as the room: dark, refined, and precise, with a presentation style that feels editorial.",
+    image: cocktailImage,
+  },
+  {
+    eyebrow: "Dining",
+    title: "Asian plates with a polished finish.",
+    copy: "The menu reads clean and curated, allowing the food to feel elevated without adding noise or gimmicky labels.",
+    image: dishImage,
+  },
+];
+
+const menuSections: MenuSection[] = [
+  {
+    label: "Snackers",
+    script: "to begin",
+    image: dishImage,
+    note: "A tighter first impression with crisp, bold, high-contrast plates.",
+    items: [
+      { name: "Crackling Spinach", desc: "sesame, thai chilli", price: "225" },
+      {
+        name: "Mushroom & Truffle Roll",
+        desc: "king oyster mushroom, ginger, chives & truffle oil",
+        price: "575",
+        tag: "Signature",
+      },
+      { name: "Charred Corn Ribs", desc: "paprika butter, yuzu sauce", price: "375" },
+      { name: "Garlic King Prawns", desc: "sichuan chilli, sweet pepper", price: "725" },
+    ],
+  },
+  {
+    label: "Dimsums",
+    script: "the heart",
+    image: heroImage,
+    note: "Comfort, texture, and soft presentation in a more refined frame.",
+    items: [
+      { name: "Edamame & Truffle", desc: "steamed Japanese beans with truffle oil", price: "525" },
+      { name: "Cream Cheese", desc: "cream cheese with shitake mushroom & pinenuts", price: "525" },
+      {
+        name: "Har Gow Prawn",
+        desc: "classic prawn dim sum, sesame oil and fish roe",
+        price: "525",
+      },
+      { name: "Chicken Kung Bao", desc: "spicy chicken with chilli mayo", price: "475" },
+    ],
+  },
+  {
+    label: "Sushi",
+    script: "from the sea",
+    image: cocktailImage,
+    note: "Sharper contrast and cleaner composition for the delicate side of the menu.",
+    items: [
+      { name: "Tempura Asparagus & Cucumber", desc: "kewpie mayo, teriyaki sauce", price: "695" },
+      {
+        name: "Crab and Tuna",
+        desc: "avocado, spicy kewpie mayo",
+        price: "825",
+        tag: "Chef's Pick",
+      },
+      {
+        name: "Dynamite Shrimp Taco",
+        desc: "fried shrimp, chilli mayo, wasabi & kikkoman soy",
+        price: "825",
+      },
+    ],
+  },
+  {
+    label: "From the Wok",
+    script: "fire & smoke",
+    image: loungeImage,
+    note: "Bolder flavours presented inside a darker, richer visual frame.",
+    items: [
+      { name: "Wok Tossed Asparagus", desc: "butter garlic sauce", price: "525" },
+      {
+        name: "Roasted Pork Ribs",
+        desc: "plum sauce, steamed pancake, scallion, cucumber",
+        price: "795",
+        tag: "Popular",
+      },
+      { name: "Xinjiang Cumin Lamb", desc: "cumin, onion, coriander", price: "725" },
+      {
+        name: "Sichuan Chilli Chicken",
+        desc: "dried red chilli, sichuan peppercorn",
+        price: "525",
+      },
+    ],
+  },
+  {
+    label: "Sharing Plates",
+    script: "for the table",
+    image: heroImage,
+    note: "Designed for a slower table rhythm and stronger group ordering moments.",
+    items: [
+      {
+        name: "Hong Kong Clay Pot Rice",
+        desc: "steamed jasmine rice, seasonal greens, mushroom",
+        price: "695",
+      },
+      { name: "Nasi Goreng", desc: "chicken / prawns", price: "795" },
+      {
+        name: "Hong Kong Crispy Noodle",
+        desc: "seasonal veg & shitake / chicken / prawn",
+        price: "695",
+      },
+      {
+        name: "Dan Dan Noodles",
+        desc: "served with peanut broth & sichuan pickle chilli",
+        price: "695",
+      },
+    ],
+  },
+  {
+    label: "Sweet Sweet",
+    script: "the encore",
+    image: cocktailImage,
+    note: "A softer finish with a more sculpted visual tone.",
+    items: [
+      { name: "Oreo Cheese Cake", desc: "white chocolate, cream cheese", price: "425" },
+      {
+        name: "Pistachio Chocolate Paradise",
+        desc: "truffle, cream cheese, biscoff",
+        price: "525",
+        tag: "Signature",
+      },
+      { name: "Panna Cotta", desc: "mandarin panna", price: "375" },
+    ],
+  },
+];
 
 function Index() {
   return (
     <>
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-primary text-primary-foreground px-4 py-2 rounded-md"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 rounded-md bg-primary px-4 py-2 text-primary-foreground"
       >
         Skip to main content
       </a>
@@ -70,7 +233,7 @@ function Index() {
             "@type": "Restaurant",
             name: "RED Vasant Vihar",
             description:
-              "A modern-day restaurant inspired by Robatayaki and global cuisine, serving food and beverages with a natural charcoal aroma.",
+              "A luxury cocktail bar and Asian kitchen in Basant Lok, Vasant Vihar, New Delhi.",
             telephone: "+918527274562",
             address: {
               "@type": "PostalAddress",
@@ -80,8 +243,7 @@ function Index() {
               postalCode: "110057",
               addressCountry: "IN",
             },
-            servesCuisine: ["Pan-Asian"],
-            priceRange: "₹2,000+",
+            servesCuisine: ["Asian", "Pan-Asian", "Cocktails"],
             openingHoursSpecification: [
               {
                 "@type": "OpeningHoursSpecification",
@@ -112,11 +274,6 @@ function Index() {
                 closes: "01:00",
               },
             ],
-            aggregateRating: {
-              "@type": "AggregateRating",
-              ratingValue: "4.4",
-              reviewCount: "175",
-            },
             sameAs: [
               "https://www.instagram.com/red_vasantvihar",
               "https://www.zomato.com/ncr/red-vasant-vihar-new-delhi",
@@ -131,13 +288,14 @@ function Index() {
         <Nav />
         <main id="main">
           <Hero />
-          <Marquee />
-          <About />
+          <EditorialStrip />
+          <Experience />
           <Gallery />
           <Menu />
           <Visit />
         </main>
         <Footer />
+        <MobileActionDock />
         <CursorGlow />
       </div>
     </>
@@ -148,77 +306,111 @@ function Nav() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-40 px-5 md:px-10 py-4 flex items-center justify-between backdrop-blur-md bg-background/30 border-b border-border/40">
-      <a href="#top" className="font-display text-2xl tracking-[0.3em] neon" aria-label="RED Home">
-        RED
-      </a>
-      <nav className="hidden md:flex gap-8 text-xs uppercase tracking-[0.25em] text-muted-foreground">
-        <a href="#about" className="hover:text-accent transition">
-          About
+    <header className="fixed left-0 right-0 top-0 z-40 px-4 py-4 md:px-8">
+      <div className="mx-auto flex max-w-7xl items-center justify-between rounded-full border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.02))] px-4 py-3 shadow-[0_24px_80px_rgba(0,0,0,0.35)] backdrop-blur-xl md:px-6">
+        <a href="#top" className="flex items-center gap-3" aria-label="RED Home">
+          <img
+            src={logoMark}
+            alt="RED logo"
+            className="h-9 w-9 rounded-full object-cover ring-1 ring-white/10"
+          />
+          <div>
+            <div className="font-display text-lg leading-none tracking-[0.35em] text-white md:text-xl">
+              RED
+            </div>
+            <div className="mt-1 text-[9px] uppercase tracking-[0.32em] text-white/55 md:text-[10px]">
+              Vasant Vihar
+            </div>
+          </div>
         </a>
-        <a href="#gallery" className="hover:text-accent transition">
-          Gallery
-        </a>
-        <a href="#menu" className="hover:text-accent transition">
-          Menu
-        </a>
-        <a href="#visit" className="hover:text-accent transition">
-          Visit
-        </a>
-        <a href="/contact" className="hover:text-accent transition">
-          Contact
-        </a>
-      </nav>
-      <div className="hidden md:flex gap-3">
-        <a
-          href="https://www.instagram.com/red_vasantvihar"
-          target="_blank"
-          rel="noreferrer"
-          className="flex items-center gap-2 text-xs uppercase tracking-[0.2em] border border-border/60 text-muted-foreground px-4 py-2 rounded-full hover:border-accent hover:text-accent transition"
-          aria-label="Instagram"
+
+        <nav className="hidden gap-8 text-[11px] uppercase tracking-[0.28em] text-white/65 md:flex">
+          <a href="#experience" className="transition hover:text-white">
+            Experience
+          </a>
+          <a href="#gallery" className="transition hover:text-white">
+            Gallery
+          </a>
+          <a href="#menu" className="transition hover:text-white">
+            Menu
+          </a>
+          <a href="#visit" className="transition hover:text-white">
+            Visit
+          </a>
+          <a href="/contact" className="transition hover:text-white">
+            Contact
+          </a>
+        </nav>
+
+        <div className="hidden items-center gap-3 md:flex">
+          <LuxeLink
+            href="https://www.instagram.com/red_vasantvihar"
+            label="Instagram"
+            icon={<Instagram className="h-3.5 w-3.5" />}
+            variant="muted"
+            external
+          />
+          <LuxeLink
+            href="https://www.eazydiner.com/delhi-ncr/red-vasant-vihar-south-delhi-687583"
+            label="Reserve"
+            icon={<Sparkles className="h-3.5 w-3.5" />}
+            external
+          />
+        </div>
+
+        <button
+          onClick={() => setOpen(!open)}
+          className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white md:hidden"
+          aria-label="Toggle menu"
         >
-          <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zM5.838 12a6.162 6.162 0 1 1 12.324 0 6.162 6.162 0 0 1-12.324 0zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm4.965-10.405a1.44 1.44 0 1 1 2.881.001 1.44 1.44 0 0 1-2.881-.001z" />
-          </svg>
-          Instagram
-        </a>
-        <a
-          href="https://www.eazydiner.com/delhi-ncr/red-vasant-vihar-south-delhi-687583"
-          target="_blank"
-          rel="noreferrer"
-          className="flex items-center gap-2 text-xs uppercase tracking-[0.2em] border border-accent/60 text-accent px-4 py-2 rounded-full hover:bg-accent hover:text-accent-foreground transition"
-        >
-          <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z" />
-          </svg>
-          Reserve
-        </a>
+          <div className="space-y-1.5">
+            <div className="h-px w-5 bg-current" />
+            <div className="h-px w-5 bg-current" />
+            <div className="ml-auto h-px w-3 bg-current" />
+          </div>
+        </button>
       </div>
-      <button onClick={() => setOpen(!open)} className="md:hidden text-accent" aria-label="Toggle menu">
-        <div className="w-6 h-px bg-current mb-1.5" />
-        <div className="w-6 h-px bg-current mb-1.5" />
-        <div className="w-4 h-px bg-current ml-auto" />
-      </button>
+
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
+            initial={{ opacity: 0, y: -18 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="absolute top-full left-0 right-0 bg-background/95 backdrop-blur-xl border-b border-border md:hidden"
+            exit={{ opacity: 0, y: -18 }}
+            className="mx-auto mt-3 max-w-7xl rounded-[2rem] border border-white/10 bg-[rgba(18,6,8,0.9)] p-6 shadow-[0_24px_80px_rgba(0,0,0,0.45)] backdrop-blur-xl md:hidden"
           >
-            <div className="flex flex-col p-6 gap-4 font-display text-2xl">
+            <div className="flex flex-col gap-3 text-sm uppercase tracking-[0.24em] text-white/70">
               {[
-                ["About", "#about"],
+                ["Experience", "#experience"],
                 ["Gallery", "#gallery"],
                 ["Menu", "#menu"],
                 ["Visit", "#visit"],
                 ["Contact", "/contact"],
               ].map(([label, href]) => (
-                <a key={href} href={href} onClick={() => setOpen(false)} className="border-b border-border/40 pb-3">
+                <a
+                  key={href}
+                  href={href}
+                  onClick={() => setOpen(false)}
+                  className="rounded-2xl border border-white/6 px-4 py-4 transition hover:border-white/15 hover:bg-white/4 hover:text-white"
+                >
                   {label}
                 </a>
               ))}
+              <div className="mt-2 grid grid-cols-2 gap-3">
+                <LuxeLink
+                  href="https://www.instagram.com/red_vasantvihar"
+                  label="Instagram"
+                  icon={<Instagram className="h-3.5 w-3.5" />}
+                  variant="muted"
+                  external
+                />
+                <LuxeLink
+                  href="https://www.eazydiner.com/delhi-ncr/red-vasant-vihar-south-delhi-687583"
+                  label="Reserve"
+                  icon={<Sparkles className="h-3.5 w-3.5" />}
+                  external
+                />
+              </div>
             </div>
           </motion.div>
         )}
@@ -230,266 +422,304 @@ function Nav() {
 function Hero() {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const y = useTransform(scrollYProgress, [0, 1], [0, 200]);
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
-  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+  const y = useTransform(scrollYProgress, [0, 1], [0, 180]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.08]);
+  const opacity = useTransform(scrollYProgress, [0, 0.85], [1, 0.25]);
 
   return (
-    <section ref={ref} id="top" className="relative h-screen min-h-[640px] overflow-hidden flex items-center justify-center">
-      <motion.div style={{ scale, y }} className="absolute inset-0">
-        <img src={img1} alt="RED Vasant Vihar interior" className="w-full h-full object-cover opacity-60" />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/20 to-background" />
+    <section
+      ref={ref}
+      id="top"
+      className="relative isolate min-h-screen overflow-hidden px-4 pb-10 pt-28 md:px-8 md:pb-16 md:pt-36"
+    >
+      <motion.div style={{ y, scale }} className="absolute inset-0">
+        <img
+          src={heroImage}
+          alt="RED dining room interior"
+          className="h-full w-full object-cover object-center opacity-45"
+        />
       </motion.div>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(158,21,34,0.22),transparent_36%),linear-gradient(180deg,rgba(10,3,5,0.55),rgba(10,3,5,0.82)_55%,rgba(10,3,5,0.98))]" />
+      <div className="absolute inset-x-0 top-28 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
 
-      <motion.div style={{ opacity }} className="relative z-10 text-center px-6">
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="font-script text-3xl md:text-5xl text-accent mb-4"
-        >
-          it can be any colour
-        </motion.p>
-        <motion.h1
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.5, duration: 1 }}
-          className="font-display text-[22vw] md:text-[18rem] leading-[0.85] tracking-tighter neon"
-        >
-          RED
-        </motion.h1>
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1 }}
-          className="font-script text-3xl md:text-5xl text-accent mt-2"
-        >
-          as long as it&apos;s red.
-        </motion.p>
+      <motion.div style={{ opacity }} className="relative z-10 mx-auto max-w-7xl">
+        <div className="grid items-end gap-12 lg:grid-cols-[1.15fr_0.85fr]">
+          <div className="max-w-4xl">
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7 }}
+              className="mb-6 inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/6 px-4 py-2 shadow-[0_18px_60px_rgba(0,0,0,0.25)] backdrop-blur-xl"
+            >
+              <img
+                src={logoMark}
+                alt="RED insignia"
+                className="h-8 w-8 rounded-full object-cover"
+              />
+              <span className="text-[10px] uppercase tracking-[0.34em] text-white/72">
+                Cocktail Bar & Asian Kitchen
+              </span>
+            </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5 }}
-          className="mt-10 flex flex-wrap items-center justify-center gap-4 text-[10px] md:text-xs tracking-[0.3em] uppercase text-muted-foreground"
-        >
-          <span>Pan-Asian Restaurant</span>
-          <span className="text-accent">·</span>
-          <span>Basant Lok</span>
-          <span className="text-accent">·</span>
-          <span>Vasant Vihar</span>
-        </motion.div>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.15, duration: 0.8 }}
+              className="font-script text-4xl text-[#f2c2ba] md:text-6xl"
+            >
+              designed in shades of desire
+            </motion.p>
+
+            <motion.h1
+              initial={{ opacity: 0, y: 26 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.25, duration: 0.9 }}
+              className="mt-4 max-w-5xl font-display text-[clamp(4.5rem,16vw,11rem)] leading-[0.85] tracking-[-0.06em] text-white"
+            >
+              RED
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.35, duration: 0.85 }}
+              className="mt-6 max-w-2xl text-base leading-7 text-white/68 md:text-lg"
+            >
+              A reputed destination for Asian food, well-balanced cocktails, music, and a room that
+              feels deeply considered. Luxury here is quiet, immersive, and unmistakably red.
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.45, duration: 0.8 }}
+              className="mt-10 flex flex-wrap items-center gap-3"
+            >
+              <LuxeLink
+                href="https://www.eazydiner.com/delhi-ncr/red-vasant-vihar-south-delhi-687583"
+                label="Reserve A Table"
+                icon={<Sparkles className="h-3.5 w-3.5" />}
+                external
+              />
+              <LuxeLink href="#menu" label="Explore Menu" variant="muted" />
+              <LuxeLink
+                href="tel:+918527274562"
+                label="Call RED"
+                icon={<Phone className="h-3.5 w-3.5" />}
+                variant="ghost"
+              />
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.55, duration: 0.8 }}
+              className="mt-12 grid max-w-3xl gap-4 sm:grid-cols-3"
+            >
+              <DetailPill
+                icon={<MapPin className="h-4 w-4" />}
+                label="Basant Lok"
+                value="Vasant Vihar"
+              />
+              <DetailPill
+                icon={<Clock3 className="h-4 w-4" />}
+                label="Lunch & Dinner"
+                value="1 PM till late"
+              />
+              <DetailPill
+                icon={<Instagram className="h-4 w-4" />}
+                label="Follow"
+                value="@red_vasantvihar"
+              />
+            </motion.div>
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 28 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.35, duration: 0.9 }}
+            className="relative"
+          >
+            <div className="grid gap-4 md:grid-cols-[0.8fr_1fr]">
+              <ImagePanel
+                image={cocktailImage}
+                alt="Signature RED cocktail"
+                label="Signature Cocktail"
+                className="md:translate-y-12"
+              />
+              <ImagePanel image={loungeImage} alt="RED bar interior" label="After-Dark Bar" />
+              <ImagePanel
+                image={dishImage}
+                alt="Plated dish at RED"
+                label="Selected Plate"
+                className="md:col-span-2"
+              />
+            </div>
+            <div className="pointer-events-none absolute -left-10 bottom-12 hidden h-32 w-32 rounded-full bg-[radial-gradient(circle,rgba(203,80,86,0.3),transparent_70%)] blur-2xl md:block" />
+          </motion.div>
+        </div>
       </motion.div>
     </section>
   );
 }
 
-function Marquee() {
+function EditorialStrip() {
   const items = [
-    "Dim Sums",
-    "★",
-    "Sushi",
-    "★",
-    "Crispy Noodles",
-    "★",
-    "Cocktails",
-    "★",
-    "Live Music",
-    "★",
-    "Wi-Fi",
-    "★",
+    "Late-night destination",
+    "Immersive red interiors",
+    "Editorial cocktail presentation",
+    "Asian kitchen",
+    "Quiet luxury atmosphere",
+    "Curated reservations flow",
   ];
 
   return (
-    <div className="overflow-hidden border-y border-border/40 py-6 bg-card/30">
-      <div className="flex marquee-track whitespace-nowrap">
-        {[...items, ...items, ...items].map((item, index) => (
-          <span key={index} className="font-display text-3xl md:text-5xl mx-8 text-accent/80 italic">
+    <section className="border-y border-white/8 bg-[rgba(255,255,255,0.02)] py-5">
+      <div className="marquee-track flex whitespace-nowrap">
+        {[...items, ...items].map((item, index) => (
+          <span
+            key={`${item}-${index}`}
+            className="mx-6 text-[11px] uppercase tracking-[0.38em] text-white/42 md:mx-10"
+          >
             {item}
           </span>
         ))}
       </div>
-    </div>
+    </section>
   );
 }
 
-function About() {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const yImg = useTransform(scrollYProgress, [0, 1], [-80, 80]);
-
+function Experience() {
   return (
-    <section id="about" ref={ref} className="relative py-24 md:py-40 px-6 md:px-12 max-w-7xl mx-auto">
-      <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-center">
-        <div>
-          <p className="font-script text-4xl text-accent mb-4">about red</p>
-          <h2 className="font-display text-5xl md:text-7xl leading-none mb-8">
-            A modern-day
-            <br />
-            restaurant.
-          </h2>
-          <p className="text-muted-foreground leading-relaxed mb-6 max-w-xl">
-            A modern-day restaurant that pays homage to the age-old culinary traditions of Japanese fishermen.
-            Inspired by Robatayaki, a method of cooking over hot charcoal with global cuisine, RED combines
-            seasonal and local produce with artisan skill to offer food and beverages with a natural charcoal
-            aroma.
-          </p>
-          <p className="text-muted-foreground leading-relaxed max-w-xl">
-            From flame meat to seafood skewers to smoked appetisers, the robata grills are used to serve a
-            diverse range of shareable plates, as well as different drinks with smoked ingredients.
-          </p>
-          <div className="mt-10 grid grid-cols-3 gap-4 text-center">
-            {[
-              ["4.4", "Google Rating"],
-              ["175", "Google Reviews"],
-              ["6.3K+", "Instagram Followers"],
-            ].map(([value, label]) => (
-              <div key={label} className="border border-border/40 rounded p-3">
-                <div className="font-display text-2xl text-accent">{value}</div>
-                <div className="text-[10px] uppercase tracking-widest text-muted-foreground mt-1">{label}</div>
+    <section id="experience" className="relative px-4 py-24 md:px-8 md:py-32">
+      <div className="mx-auto max-w-7xl">
+        <SectionHeading
+          eyebrow="The Experience"
+          title="Luxury that feels cinematic, not crowded."
+          copy="The interface now follows the same idea the venue already has in real life: stronger ambience, better pacing, cleaner imagery, and motion that feels expensive rather than busy."
+        />
+
+        <div className="mt-14 grid gap-6 lg:grid-cols-3">
+          {signatureMoments.map((moment, index) => (
+            <motion.article
+              key={moment.title}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              whileHover={{ y: -10, scale: 1.01 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ delay: index * 0.08, duration: 0.7 }}
+              className="luxe-panel group overflow-hidden"
+            >
+              <div className="relative aspect-[4/5] overflow-hidden">
+                <img
+                  src={moment.image}
+                  alt={moment.title}
+                  className="enhanced-image h-full w-full object-cover transition duration-700 group-hover:scale-108"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.18),transparent_30%)] opacity-70 transition duration-700 group-hover:opacity-100" />
               </div>
-            ))}
-          </div>
+              <div className="relative p-6 md:p-7">
+                <div className="text-[10px] uppercase tracking-[0.32em] text-white/42">
+                  {moment.eyebrow}
+                </div>
+                <h3 className="mt-3 font-display text-3xl leading-none text-white md:text-[2.25rem]">
+                  {moment.title}
+                </h3>
+                <p className="mt-4 text-sm leading-7 text-white/62">{moment.copy}</p>
+              </div>
+            </motion.article>
+          ))}
         </div>
-        <motion.div style={{ y: yImg }} className="relative aspect-[3/4] overflow-hidden rounded-sm">
-          <img src={img3} alt="RED Vasant Vihar booth seating" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 ring-1 ring-accent/30 mix-blend-overlay" />
-        </motion.div>
       </div>
     </section>
   );
 }
 
 function Gallery() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const positions = [
-    { top: "5%", left: "5%", rotate: -6, w: "min(60vw, 280px)" },
-    { top: "10%", left: "55%", rotate: 4, w: "min(55vw, 260px)" },
-    { top: "45%", left: "30%", rotate: -2, w: "min(65vw, 320px)" },
-    { top: "55%", left: "5%", rotate: 5, w: "min(50vw, 240px)" },
-    { top: "60%", left: "60%", rotate: -8, w: "min(50vw, 230px)" },
-  ];
-
   return (
-    <section id="gallery" className="relative py-24 md:py-32 overflow-hidden">
-      <div className="text-center px-6 mb-10 md:mb-16">
-        <p className="font-script text-4xl text-accent">gallery</p>
-        <h2 className="font-display text-5xl md:text-7xl mt-2">Inside RED.</h2>
-      </div>
+    <section id="gallery" className="relative px-4 py-24 md:px-8 md:py-32">
+      <div className="mx-auto max-w-7xl">
+        <div className="grid gap-12 lg:grid-cols-[0.72fr_1.28fr] lg:items-end">
+          <SectionHeading
+            eyebrow="Gallery"
+            title="An atmosphere you can feel before you walk in."
+            copy="The visual system leans into architecture, ambience, material, and finish, using only the cleanest non-people images so the space remains the hero."
+          />
 
-      <div ref={containerRef} className="relative h-[600px] md:h-[700px] mx-4 md:mx-12 dotted-bg rounded-lg border border-border/40 overflow-hidden">
-        {positions.map((position, index) => (
           <motion.div
-            key={index}
-            drag
-            dragConstraints={containerRef}
-            dragElastic={0.2}
-            whileDrag={{ scale: 1.05, zIndex: 30, rotate: 0 }}
-            initial={{ opacity: 0, scale: 0.8, rotate: position.rotate }}
-            whileInView={{ opacity: 1, scale: 1, rotate: position.rotate }}
-            viewport={{ once: true }}
-            transition={{ delay: index * 0.1, type: "spring" }}
-            style={{ top: position.top, left: position.left, width: position.w }}
-            className="absolute cursor-grab active:cursor-grabbing bg-card p-2 pb-8 shadow-2xl"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.8 }}
+            className="grid gap-4 md:grid-cols-2"
           >
-            <img src={photos[index]} alt="" draggable={false} className="w-full aspect-[4/5] object-cover pointer-events-none" />
-            <p className="font-script text-accent text-center text-xl mt-1">red.{String(index + 1).padStart(2, "0")}</p>
+            {galleryImages.map((item, index) => (
+              <motion.div
+                key={item.title}
+                whileHover={{ y: -10, scale: 1.01 }}
+                transition={{ type: "spring", stiffness: 220, damping: 18 }}
+                className={`luxe-panel group overflow-hidden ${index === 0 ? "md:col-span-2" : ""}`}
+              >
+                <div
+                  className={`relative overflow-hidden ${index === 0 ? "aspect-[16/9]" : "aspect-[5/6]"}`}
+                >
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="enhanced-image h-full w-full object-cover transition duration-700 group-hover:scale-108"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/78 via-black/10 to-transparent" />
+                  <div className="absolute inset-0 opacity-0 transition duration-700 group-hover:opacity-100 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.2),transparent_28%)]" />
+                  <div className="pointer-events-none absolute inset-x-6 top-6 flex items-center justify-between">
+                    <div className="rounded-full border border-white/12 bg-black/25 px-3 py-2 text-[10px] uppercase tracking-[0.28em] text-white/70 backdrop-blur-xl">
+                      Visual Story
+                    </div>
+                    <div className="rounded-full border border-white/12 bg-black/25 p-2.5 text-white/75 backdrop-blur-xl">
+                      <ArrowUpRight className="h-3.5 w-3.5" />
+                    </div>
+                  </div>
+                </div>
+                <div className="p-5 md:p-6">
+                  <div className="flex items-center justify-between gap-4">
+                    <h3 className="font-display text-3xl leading-none text-white">{item.title}</h3>
+                    <span className="text-[10px] uppercase tracking-[0.32em] text-white/35">
+                      0{index + 1}
+                    </span>
+                  </div>
+                  <p className="mt-3 max-w-md text-sm leading-7 text-white/60">{item.copy}</p>
+                </div>
+              </motion.div>
+            ))}
           </motion.div>
-        ))}
+        </div>
       </div>
     </section>
   );
 }
-
-type Dish = { name: string; desc: string; price: string; tag?: string };
-
-const menuSections: { label: string; script: string; items: Dish[] }[] = [
-  {
-    label: "Snackers",
-    script: "to begin",
-    items: [
-      { name: "Crackling Spinach", desc: "sesame, thai chilli", price: "225" },
-      {
-        name: "Mushroom & Truffle Roll",
-        desc: "king oyster mushroom, ginger, chives & truffle oil",
-        price: "575",
-        tag: "★",
-      },
-      { name: "Charred Corn Ribs", desc: "paprika butter, yuzu sauce", price: "375" },
-      { name: "Garlic King Prawns", desc: "sichuan chilli, sweet pepper", price: "725" },
-    ],
-  },
-  {
-    label: "Dimsums",
-    script: "the heart",
-    items: [
-      { name: "Edamame & Truffle", desc: "steamed Japanese beans with truffle oil", price: "525" },
-      { name: "Cream Cheese", desc: "cream cheese with shitake mushroom & pinenuts", price: "525" },
-      { name: "Har Gow Prawn", desc: "classic prawn dim sum, sesame oil and fish roe", price: "525" },
-      { name: "Chicken Kung Bao", desc: "spicy chicken with chilli mayo", price: "475" },
-    ],
-  },
-  {
-    label: "Sushi",
-    script: "from the sea",
-    items: [
-      { name: "Tempura Asparagus & Cucumber", desc: "kewpie mayo, teriyaki sauce", price: "695" },
-      { name: "Crab and Tuna", desc: "avocado, spicy kewpie mayo", price: "825", tag: "★" },
-      { name: "Dynamite Shrimp Taco", desc: "fried shrimp, chilli mayo, wasabi & kikkoman soy", price: "825" },
-    ],
-  },
-  {
-    label: "From the Wok",
-    script: "fire & smoke",
-    items: [
-      { name: "Wok Tossed Asparagus", desc: "butter garlic sauce", price: "525" },
-      { name: "Roasted Pork Ribs", desc: "plum sauce, steamed pancake, scallion, cucumber", price: "795", tag: "★" },
-      { name: "Xinjiang Cumin Lamb", desc: "cumin, onion, coriander", price: "725" },
-      { name: "Sichuan Chilli Chicken", desc: "dried red chilli, sichuan peppercorn", price: "525" },
-    ],
-  },
-  {
-    label: "Sharing Plates",
-    script: "all the red you need",
-    items: [
-      { name: "Hong Kong Clay Pot Rice", desc: "steamed jasmine rice, seasonal greens, mushroom", price: "695" },
-      { name: "Nasi Goreng", desc: "chicken / prawns", price: "795" },
-      { name: "Hong Kong Crispy Noodle", desc: "seasonal veg & shitake / chicken / prawn", price: "695" },
-      { name: "Dan Dan Noodles", desc: "served with peanut broth & sichuan pickle chilli", price: "695" },
-    ],
-  },
-  {
-    label: "Sweet Sweet",
-    script: "the encore",
-    items: [
-      { name: "Oreo Cheese Cake", desc: "white chocolate, cream cheese", price: "425" },
-      { name: "Pistachio Chocolate Paradise", desc: "truffle, cream cheese, biscoff", price: "525", tag: "★" },
-      { name: "Panna Cotta", desc: "mandarin panna", price: "375" },
-    ],
-  },
-];
 
 function Menu() {
   const [active, setActive] = useState(0);
   const section = menuSections[active];
 
   return (
-    <section id="menu" className="relative py-24 md:py-32 px-5 md:px-12">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-12">
-          <p className="font-script text-4xl text-accent">the menu</p>
-          <h2 className="font-display text-5xl md:text-7xl mt-2">Selected Dishes.</h2>
-        </div>
+    <section id="menu" className="relative px-4 py-24 md:px-8 md:py-32">
+      <div className="mx-auto max-w-7xl">
+        <SectionHeading
+          eyebrow="Selected Menu"
+          title="A cleaner, more premium way to browse the menu."
+          copy="Buttons now work like refined filters instead of generic chips. Each category feels like a chapter with its own pacing, image, and tone."
+        />
 
-        <div className="flex gap-2 overflow-x-auto pb-3 -mx-5 px-5 md:justify-center scrollbar-thin mb-10">
+        <div className="mt-12 flex gap-3 overflow-x-auto pb-2">
           {menuSections.map((sectionItem, index) => (
             <button
               key={sectionItem.label}
               onClick={() => setActive(index)}
-              className={`shrink-0 px-5 py-2 rounded-full border text-xs uppercase tracking-[0.2em] transition ${
+              className={`shrink-0 rounded-full border px-5 py-3 text-[11px] uppercase tracking-[0.3em] transition ${
                 active === index
-                  ? "bg-primary text-primary-foreground border-primary"
-                  : "border-border/60 text-muted-foreground hover:border-accent/60 hover:text-accent"
+                  ? "border-[#e6b5ad] bg-[linear-gradient(180deg,rgba(230,181,173,0.24),rgba(230,181,173,0.08))] text-white shadow-[0_0_0_1px_rgba(230,181,173,0.15)_inset,0_12px_40px_rgba(96,16,24,0.35)]"
+                  : "border-white/10 bg-white/[0.03] text-white/55 hover:border-white/18 hover:text-white"
               }`}
             >
               {sectionItem.label}
@@ -499,46 +729,95 @@ function Menu() {
 
         <AnimatePresence mode="wait">
           <motion.div
-            key={active}
-            initial={{ opacity: 0, y: 30 }}
+            key={section.label}
+            initial={{ opacity: 0, y: 26 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.4 }}
-            className="bg-card/40 backdrop-blur border border-border/40 rounded-lg p-6 md:p-12"
+            className="mt-8 grid gap-5 lg:grid-cols-[0.85fr_1.15fr]"
           >
-            <div className="text-center mb-8 border-b border-border/40 pb-6">
-              <p className="font-script text-3xl text-accent">{section.script}</p>
-              <h3 className="font-display text-4xl md:text-5xl italic">{section.label}</h3>
+            <div className="luxe-panel overflow-hidden">
+              <div className="relative aspect-[5/6] overflow-hidden">
+                <img
+                  src={section.image}
+                  alt={section.label}
+                  className="enhanced-image h-full w-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/82 via-black/10 to-transparent" />
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.15),transparent_30%)]" />
+                <div className="absolute inset-x-0 bottom-0 p-6 md:p-7">
+                  <p className="font-script text-4xl text-[#f2c2ba]">{section.script}</p>
+                  <h3 className="mt-2 font-display text-4xl leading-none text-white md:text-5xl">
+                    {section.label}
+                  </h3>
+                  <p className="mt-4 max-w-md text-sm leading-7 text-white/62">{section.note}</p>
+                </div>
+              </div>
             </div>
 
-            <ul className="space-y-6">
-              {section.items.map((dish, index) => (
-                <motion.li
-                  key={dish.name}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.08 }}
-                  className="group flex gap-4 items-baseline border-b border-dashed border-border/30 pb-4"
-                >
-                  <div className="flex-1">
-                    <div className="flex items-baseline gap-2">
-                      {dish.tag && <span className="text-accent text-xs">{dish.tag}</span>}
-                      <h4 className="font-display text-xl md:text-2xl group-hover:text-accent transition">
-                        {dish.name}
-                      </h4>
-                    </div>
-                    <p className="text-xs md:text-sm text-muted-foreground mt-1">{dish.desc}</p>
+            <div className="luxe-panel p-6 md:p-8">
+              <div className="mb-8 flex items-end justify-between gap-4 border-b border-white/8 pb-6">
+                <div>
+                  <div className="text-[10px] uppercase tracking-[0.34em] text-white/38">
+                    Current Selection
                   </div>
-                  <div className="font-display text-xl md:text-2xl text-accent tabular-nums">₹{dish.price}</div>
-                </motion.li>
-              ))}
-            </ul>
+                  <h3 className="mt-2 font-display text-4xl leading-none text-white md:text-5xl">
+                    {section.label}
+                  </h3>
+                </div>
+                <div className="text-[10px] uppercase tracking-[0.32em] text-white/38">
+                  Curated View
+                </div>
+              </div>
+
+              <ul className="space-y-5">
+                {section.items.map((dish, index) => (
+                  <motion.li
+                    key={dish.name}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.06 }}
+                    className="group rounded-[1.6rem] border border-white/8 bg-white/[0.03] px-5 py-5 transition hover:border-white/16 hover:bg-white/[0.05]"
+                  >
+                    <div className="flex items-start justify-between gap-5">
+                      <div>
+                        <div className="flex flex-wrap items-center gap-2">
+                          <h4 className="font-display text-2xl leading-none text-white transition group-hover:text-[#f3c8c0]">
+                            {dish.name}
+                          </h4>
+                          {dish.tag && (
+                            <span className="rounded-full border border-[#e6b5ad]/30 bg-[#e6b5ad]/10 px-2.5 py-1 text-[9px] uppercase tracking-[0.28em] text-[#f2c2ba]">
+                              {dish.tag}
+                            </span>
+                          )}
+                        </div>
+                        <p className="mt-3 max-w-lg text-sm leading-7 text-white/55">{dish.desc}</p>
+                      </div>
+                      <div className="font-display text-2xl text-[#f2c2ba] md:text-3xl">
+                        ₹{dish.price}
+                      </div>
+                    </div>
+                  </motion.li>
+                ))}
+              </ul>
+
+              <div className="mt-8 flex flex-wrap gap-3">
+                <LuxeLink
+                  href="tel:+918527274562"
+                  label="Call To Reserve"
+                  icon={<Phone className="h-3.5 w-3.5" />}
+                  variant="ghost"
+                />
+                <LuxeLink
+                  href="https://www.zomato.com/ncr/red-vasant-vihar-new-delhi"
+                  label="View Listings"
+                  variant="muted"
+                  external
+                />
+              </div>
+            </div>
           </motion.div>
         </AnimatePresence>
-
-        <p className="text-center text-[10px] uppercase tracking-[0.3em] text-muted-foreground/70 mt-8">
-          all prices exclusive of taxes
-        </p>
       </div>
     </section>
   );
@@ -546,98 +825,113 @@ function Menu() {
 
 function Visit() {
   return (
-    <section id="visit" className="relative py-24 md:py-32 px-6 md:px-12">
-      <div className="max-w-5xl mx-auto">
-        <div className="text-center mb-14">
-          <p className="font-script text-4xl text-accent">visit</p>
-          <h2 className="font-display text-5xl md:text-7xl mt-2">Plan Your Visit.</h2>
-        </div>
+    <section id="visit" className="relative px-4 pb-24 pt-24 md:px-8 md:pb-32 md:pt-32">
+      <div className="mx-auto max-w-7xl">
+        <div className="grid gap-6 lg:grid-cols-[0.88fr_1.12fr]">
+          <div className="luxe-panel p-6 md:p-8">
+            <SectionHeading
+              eyebrow="Visit RED"
+              title="Everything important, without unnecessary clutter."
+              copy="This section keeps only the details that matter when someone is ready to act: where it is, when it opens, and how to reserve."
+            />
 
-        <div className="grid md:grid-cols-2 gap-10">
-          <motion.div whileHover={{ y: -4 }} className="bg-card/50 border border-border/40 rounded-lg p-8">
-            <p className="font-script text-2xl text-accent mb-2">address</p>
-            <p className="font-display text-2xl leading-snug">
-              24, Community center,
-              <br />
-              Main Market, Basant Lok,
-              <br />
-              Vasant Vihar, New Delhi,
-              <br />
-              Delhi 110057
-            </p>
-            <a
-              href="https://maps.google.com/?q=Red+Vasant+Vihar"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-block mt-6 text-xs uppercase tracking-[0.2em] border border-accent/60 text-accent px-4 py-2 rounded-full hover:bg-accent hover:text-accent-foreground transition"
-            >
-              Open in Maps
-            </a>
-          </motion.div>
+            <div className="mt-10 space-y-4">
+              {[
+                {
+                  label: "Address",
+                  value:
+                    "24, Community Center, Main Market, Basant Lok, Vasant Vihar, New Delhi 110057",
+                },
+                { label: "Lunch", value: "1 PM - 4 PM" },
+                { label: "Dinner", value: "6 PM - 1 AM" },
+                { label: "Phone", value: "085272 74562", href: "tel:+918527274562" },
+              ].map((item) => (
+                <div
+                  key={item.label}
+                  className="flex flex-col gap-2 rounded-[1.4rem] border border-white/8 bg-white/[0.03] px-5 py-4 md:flex-row md:items-center md:justify-between"
+                >
+                  <div className="text-[10px] uppercase tracking-[0.3em] text-white/38">
+                    {item.label}
+                  </div>
+                  {item.href ? (
+                    <a
+                      href={item.href}
+                      className="text-sm leading-7 text-white/78 transition hover:text-[#f2c2ba]"
+                    >
+                      {item.value}
+                    </a>
+                  ) : (
+                    <div className="max-w-md text-sm leading-7 text-white/78">{item.value}</div>
+                  )}
+                </div>
+              ))}
+            </div>
 
-          <motion.div whileHover={{ y: -4 }} className="bg-card/50 border border-border/40 rounded-lg p-8">
-            <p className="font-script text-2xl text-accent mb-2">details</p>
-            <ul className="space-y-3 text-sm text-muted-foreground">
-              <li className="flex justify-between gap-4">
-                <span className="uppercase tracking-[0.2em]">Hours</span>
-                <span className="text-right text-foreground">Open · Closes 1 am</span>
-              </li>
-              <li className="flex justify-between gap-4">
-                <span className="uppercase tracking-[0.2em]">Lunch</span>
-                <span className="text-right text-foreground">1 PM - 4 PM</span>
-              </li>
-              <li className="flex justify-between gap-4">
-                <span className="uppercase tracking-[0.2em]">Dinner</span>
-                <span className="text-right text-foreground">6 PM - 1 AM</span>
-              </li>
-              <li className="flex justify-between gap-4">
-                <span className="uppercase tracking-[0.2em]">Phone</span>
-                <a href="tel:+918527274562" className="text-right text-foreground hover:text-accent transition">
-                  085272 74562
-                </a>
-              </li>
-              <li className="flex justify-between gap-4">
-                <span className="uppercase tracking-[0.2em]">Price</span>
-                <span className="text-right text-foreground">₹2,000+</span>
-              </li>
-              <li className="flex justify-between gap-4">
-                <span className="uppercase tracking-[0.2em]">Service</span>
-                <span className="text-right text-foreground">Reservations required</span>
-              </li>
-              <li className="flex justify-between gap-4">
-                <span className="uppercase tracking-[0.2em]">Features</span>
-                <span className="text-right text-foreground">Live music · Wi-Fi</span>
-              </li>
-            </ul>
-
-            <div className="flex flex-wrap gap-2 mt-6">
-              <a href="tel:+918527274562" className="text-xs uppercase tracking-[0.2em] bg-primary text-primary-foreground px-4 py-2 rounded-full">
-                Call
-              </a>
-              <a
-                href="https://www.zomato.com/ncr/red-vasant-vihar-new-delhi"
-                target="_blank"
-                rel="noreferrer"
-                className="text-xs uppercase tracking-[0.2em] border border-border px-4 py-2 rounded-full hover:border-accent"
-              >
-                Zomato
-              </a>
-              <a
+            <div className="mt-8 flex flex-wrap gap-3">
+              <LuxeLink
+                href="https://maps.google.com/?q=Red+Vasant+Vihar"
+                label="Get Directions"
+                external
+              />
+              <LuxeLink
                 href="https://www.eazydiner.com/delhi-ncr/red-vasant-vihar-south-delhi-687583"
-                target="_blank"
-                rel="noreferrer"
-                className="text-xs uppercase tracking-[0.2em] border border-border px-4 py-2 rounded-full hover:border-accent"
-              >
-                EazyDiner
-              </a>
-              <a
-                href="https://www.district.in/dining/ncr/red-vasant-vihar-new-delhi"
-                target="_blank"
-                rel="noreferrer"
-                className="text-xs uppercase tracking-[0.2em] border border-border px-4 py-2 rounded-full hover:border-accent"
-              >
-                District
-              </a>
+                label="Reserve"
+                icon={<Sparkles className="h-3.5 w-3.5" />}
+                variant="muted"
+                external
+              />
+            </div>
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.8 }}
+            className="luxe-panel overflow-hidden"
+          >
+            <div className="relative h-full min-h-[520px]">
+              <img
+                src={loungeImage}
+                alt="RED bar ambience"
+                className="absolute inset-0 h-full w-full object-cover"
+              />
+              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.18),rgba(0,0,0,0.76))]" />
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.12),transparent_32%)]" />
+              <div className="relative z-10 flex h-full flex-col justify-between p-6 md:p-8">
+                <div className="inline-flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/8 px-4 py-2 text-[10px] uppercase tracking-[0.34em] text-white/72 backdrop-blur-xl">
+                  <span>Reservations</span>
+                  <ArrowUpRight className="h-3.5 w-3.5" />
+                </div>
+
+                <div className="max-w-xl">
+                  <p className="font-script text-4xl text-[#f2c2ba] md:text-5xl">
+                    after dark, done properly
+                  </p>
+                  <h3 className="mt-3 font-display text-4xl leading-none text-white md:text-6xl">
+                    Your premium destination in Vasant Vihar.
+                  </h3>
+                  <p className="mt-5 max-w-lg text-sm leading-7 text-white/68 md:text-base">
+                    The site now drives users toward the actions that matter: reserve, call, get
+                    directions, or browse the menu with confidence.
+                  </p>
+
+                  <div className="mt-8 flex flex-wrap gap-3">
+                    <LuxeLink
+                      href="tel:+918527274562"
+                      label="Call Now"
+                      icon={<Phone className="h-3.5 w-3.5" />}
+                    />
+                    <LuxeLink
+                      href="https://www.instagram.com/red_vasantvihar"
+                      label="Instagram"
+                      icon={<Instagram className="h-3.5 w-3.5" />}
+                      variant="ghost"
+                      external
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
           </motion.div>
         </div>
@@ -648,99 +942,221 @@ function Visit() {
 
 function Footer() {
   return (
-    <footer className="border-t border-border/40 py-12 px-6 text-center">
-      <p className="font-display text-6xl md:text-8xl neon">RED</p>
-      <p className="font-script text-2xl text-accent mt-2">Vasant Vihar</p>
-      <p className="text-[10px] uppercase tracking-[0.4em] text-muted-foreground mt-6">
-        Basant Lok · New Delhi · @red_vasantvihar
-      </p>
+    <footer className="border-t border-white/8 px-4 py-12 md:px-8 md:py-16">
+      <div className="mx-auto flex max-w-7xl flex-col gap-8 md:flex-row md:items-end md:justify-between">
+        <div>
+          <div className="flex items-center gap-4">
+            <img
+              src={logoMark}
+              alt="RED logo"
+              className="h-12 w-12 rounded-full object-cover ring-1 ring-white/10"
+            />
+            <div>
+              <div className="font-display text-5xl leading-none tracking-[-0.04em] text-white md:text-6xl">
+                RED
+              </div>
+              <div className="mt-1 text-[10px] uppercase tracking-[0.36em] text-white/42">
+                Vasant Vihar
+              </div>
+            </div>
+          </div>
+          <p className="mt-5 max-w-md text-sm leading-7 text-white/52">
+            A luxury cocktail bar and Asian kitchen shaped around mood, texture, and a stronger
+            digital presence.
+          </p>
+        </div>
 
-      <div className="flex justify-center gap-4 mt-6">
-        <a
-          href="https://www.instagram.com/red_vasantvihar"
-          target="_blank"
-          rel="noreferrer"
-          className="w-12 h-12 rounded-full border border-accent/60 flex items-center justify-center hover:bg-accent hover:text-accent-foreground transition group"
-          aria-label="Instagram"
-        >
-          <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zM5.838 12a6.162 6.162 0 1 1 12.324 0 6.162 6.162 0 0 1-12.324 0zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm4.965-10.405a1.44 1.44 0 1 1 2.881.001 1.44 1.44 0 0 1-2.881-.001z" />
-          </svg>
-        </a>
-        <a
-          href="https://www.zomato.com/ncr/red-vasant-vihar-new-delhi"
-          target="_blank"
-          rel="noreferrer"
-          className="w-12 h-12 rounded-full border border-accent/60 flex items-center justify-center hover:bg-accent hover:text-accent-foreground transition"
-          aria-label="Zomato"
-        >
-          <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M11.5 2C6.81 2 3 5.81 3 10.5S6.81 19 11.5 19h.5v3c4.86-2.34 8-7 8-11.5C20 5.81 16.19 2 11.5 2zm-1 11.5h-2v-2h2v2zm0-3.5h-2v-4h2v4z" />
-          </svg>
-        </a>
-        <a
-          href="https://www.eazydiner.com/delhi-ncr/red-vasant-vihar-south-delhi-687583"
-          target="_blank"
-          rel="noreferrer"
-          className="w-12 h-12 rounded-full border border-accent/60 flex items-center justify-center hover:bg-accent hover:text-accent-foreground transition"
-          aria-label="EazyDiner"
-        >
-          <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z" />
-          </svg>
-        </a>
-        <a
-          href="https://www.district.in/dining/ncr/red-vasant-vihar-new-delhi"
-          target="_blank"
-          rel="noreferrer"
-          className="w-12 h-12 rounded-full border border-accent/60 flex items-center justify-center hover:bg-accent hover:text-accent-foreground transition"
-          aria-label="District by Zomato"
-        >
-          <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-          </svg>
-        </a>
-        <a
-          href="tel:+918527274562"
-          className="w-12 h-12 rounded-full border border-accent/60 flex items-center justify-center hover:bg-accent hover:text-accent-foreground transition"
-          aria-label="Phone"
-        >
-          <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
-          </svg>
-        </a>
-      </div>
-
-      <div className="mt-8 pt-8 border-t border-border/40">
-        <div className="flex flex-wrap justify-center gap-6 text-xs uppercase tracking-[0.2em] text-muted-foreground">
-          <a href="/privacy" className="hover:text-accent transition">
-            Privacy
-          </a>
-          <a href="/terms" className="hover:text-accent transition">
-            Terms
-          </a>
-          <a href="/contact" className="hover:text-accent transition">
-            Contact
-          </a>
+        <div className="flex flex-wrap gap-3">
+          <LuxeLink href="/contact" label="Contact" variant="ghost" />
+          <LuxeLink
+            href="tel:+918527274562"
+            label="Call"
+            icon={<Phone className="h-3.5 w-3.5" />}
+            variant="ghost"
+          />
+          <LuxeLink
+            href="https://www.instagram.com/red_vasantvihar"
+            label="Instagram"
+            icon={<Instagram className="h-3.5 w-3.5" />}
+            variant="muted"
+            external
+          />
         </div>
       </div>
     </footer>
   );
 }
 
-function CursorGlow() {
-  const [mouse, setMouse] = useState({ x: 0, y: 0 });
-  const x = useSpring(mouse.x, { stiffness: 120, damping: 20 });
-  const y = useSpring(mouse.y, { stiffness: 120, damping: 20 });
-
-  if (typeof window !== "undefined") {
-    window.onmousemove = (event) => setMouse({ x: event.clientX - 160, y: event.clientY - 160 });
-  }
+function LuxeLink({
+  href,
+  label,
+  icon,
+  external,
+  variant = "solid",
+}: {
+  href: string;
+  label: string;
+  icon?: ReactNode;
+  external?: boolean;
+  variant?: "solid" | "muted" | "ghost";
+}) {
+  const styles = {
+    solid:
+      "border-[#e6b5ad]/35 bg-[linear-gradient(180deg,rgba(230,181,173,0.28),rgba(133,35,42,0.48))] text-white shadow-[0_14px_50px_rgba(117,22,29,0.35)] hover:-translate-y-0.5 hover:shadow-[0_22px_60px_rgba(117,22,29,0.45)]",
+    muted:
+      "border-white/12 bg-white/[0.05] text-white/80 hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/[0.08]",
+    ghost:
+      "border-white/10 bg-transparent text-white/70 hover:-translate-y-0.5 hover:border-white/18 hover:bg-white/[0.04] hover:text-white",
+  }[variant];
 
   return (
+    <a
+      href={href}
+      target={external ? "_blank" : undefined}
+      rel={external ? "noreferrer" : undefined}
+      className={`group inline-flex items-center gap-2 rounded-full border px-5 py-3 text-[11px] uppercase tracking-[0.28em] transition duration-300 will-change-transform ${styles}`}
+    >
+      {icon ? <span className="text-current/90">{icon}</span> : null}
+      <span>{label}</span>
+      <ArrowUpRight className="h-3.5 w-3.5 transition duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+    </a>
+  );
+}
+
+function SectionHeading({
+  eyebrow,
+  title,
+  copy,
+}: {
+  eyebrow: string;
+  title: string;
+  copy: string;
+}) {
+  return (
+    <div className="max-w-3xl">
+      <div className="text-[10px] uppercase tracking-[0.34em] text-white/38">{eyebrow}</div>
+      <h2 className="mt-4 font-display text-4xl leading-[0.92] text-white md:text-6xl">{title}</h2>
+      <p className="mt-5 max-w-2xl text-sm leading-7 text-white/58 md:text-base">{copy}</p>
+    </div>
+  );
+}
+
+function DetailPill({ icon, label, value }: { icon: ReactNode; label: string; value: string }) {
+  return (
+    <div className="rounded-[1.6rem] border border-white/10 bg-white/[0.04] p-4 shadow-[0_20px_70px_rgba(0,0,0,0.2)] backdrop-blur-xl">
+      <div className="flex items-center gap-2 text-[#f2c2ba]">{icon}</div>
+      <div className="mt-4 text-[10px] uppercase tracking-[0.3em] text-white/35">{label}</div>
+      <div className="mt-2 text-sm text-white/78">{value}</div>
+    </div>
+  );
+}
+
+function ImagePanel({
+  image,
+  alt,
+  label,
+  className = "",
+}: {
+  image: string;
+  alt: string;
+  label: string;
+  className?: string;
+}) {
+  return (
     <motion.div
-      style={{ x, y }}
-      className="pointer-events-none fixed top-0 left-0 z-30 h-80 w-80 rounded-full bg-primary/10 blur-3xl hidden md:block"
-    />
+      whileHover={{ y: -10, scale: 1.01 }}
+      transition={{ type: "spring", stiffness: 220, damping: 18 }}
+      className={`luxe-panel group overflow-hidden ${className}`}
+    >
+      <div className="relative aspect-[4/5] overflow-hidden">
+        <img
+          src={image}
+          alt={alt}
+          className="enhanced-image h-full w-full object-cover transition duration-700 group-hover:scale-108"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/82 via-black/15 to-transparent" />
+        <div className="absolute inset-0 opacity-0 transition duration-700 group-hover:opacity-100 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.18),transparent_28%)]" />
+        <div className="absolute inset-x-0 bottom-0 p-5">
+          <div className="text-[10px] uppercase tracking-[0.32em] text-white/40">{label}</div>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+function MobileActionDock() {
+  return (
+    <div className="fixed inset-x-0 bottom-0 z-40 px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-4 md:hidden">
+      <div className="mx-auto grid max-w-md grid-cols-3 gap-3 rounded-[1.8rem] border border-white/10 bg-[rgba(14,4,6,0.88)] p-3 shadow-[0_-10px_50px_rgba(0,0,0,0.35)] backdrop-blur-2xl">
+        <MobileDockLink
+          href="tel:+918527274562"
+          label="Call"
+          icon={<Phone className="h-5 w-5" />}
+        />
+        <MobileDockLink
+          href="https://www.instagram.com/red_vasantvihar"
+          label="Instagram"
+          icon={<Instagram className="h-5 w-5" />}
+          external
+        />
+        <MobileDockLink
+          href="https://www.eazydiner.com/delhi-ncr/red-vasant-vihar-south-delhi-687583"
+          label="Reserve"
+          icon={<Sparkles className="h-5 w-5" />}
+          external
+        />
+      </div>
+    </div>
+  );
+}
+
+function MobileDockLink({
+  href,
+  label,
+  icon,
+  external,
+}: {
+  href: string;
+  label: string;
+  icon: ReactNode;
+  external?: boolean;
+}) {
+  return (
+    <a
+      href={href}
+      target={external ? "_blank" : undefined}
+      rel={external ? "noreferrer" : undefined}
+      className="flex flex-col items-center justify-center gap-2 rounded-[1.2rem] border border-white/8 bg-[linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03))] px-3 py-3 text-white transition active:scale-[0.98]"
+    >
+      <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#b63542]/18 text-[#f2c2ba]">
+        {icon}
+      </span>
+      <span className="text-[10px] uppercase tracking-[0.24em] text-white/72">{label}</span>
+    </a>
+  );
+}
+
+function CursorGlow() {
+  const [mouse, setMouse] = useState({ x: 0, y: 0 });
+  const x = useSpring(mouse.x, { stiffness: 110, damping: 18, mass: 0.6 });
+  const y = useSpring(mouse.y, { stiffness: 110, damping: 18, mass: 0.6 });
+
+  useEffect(() => {
+    const handleMove = (event: MouseEvent) => {
+      setMouse({ x: event.clientX - 180, y: event.clientY - 180 });
+    };
+
+    window.addEventListener("mousemove", handleMove);
+    return () => window.removeEventListener("mousemove", handleMove);
+  }, []);
+
+  return (
+    <>
+      <motion.div
+        style={{ x, y }}
+        className="pointer-events-none fixed left-0 top-0 z-30 hidden h-96 w-96 rounded-full bg-[radial-gradient(circle,rgba(170,32,46,0.18),rgba(170,32,46,0)_68%)] blur-3xl md:block"
+      />
+      <div className="pointer-events-none fixed inset-0 z-20 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.05),transparent_26%),radial-gradient(circle_at_80%_0%,rgba(188,46,60,0.14),transparent_30%)]" />
+    </>
   );
 }

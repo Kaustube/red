@@ -63,7 +63,10 @@ function Contact() {
             <div className="space-y-4 text-sm text-muted-foreground">
               <div className="flex justify-between gap-4">
                 <span className="uppercase tracking-[0.2em]">Phone</span>
-                <a href="tel:+918527274562" className="text-foreground hover:text-accent transition">
+                <a
+                  href="tel:+918527274562"
+                  className="text-foreground hover:text-accent transition"
+                >
                   085272 74562
                 </a>
               </div>
